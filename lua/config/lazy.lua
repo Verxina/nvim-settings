@@ -16,28 +16,27 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    -- add LazyVim and import its plugins
+    -- LazyVim を追加してプラグインを取り込みます
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import/override with your plugins
+    -- 自分のプラグインを読み込んだり上書きしたりできます
     { import = "plugins" },
   },
   defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+    -- デフォルトでは LazyVim のプラグインだけが遅延読み込みされます。自作プラグインは起動時に読み込まれます。
+    -- 意図がある場合はこれを `true` にして、自作プラグインもデフォルトで遅延読み込みできます。
     lazy = false,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    -- バージョン管理に対応した多くのプラグインはリリースが古く、Neovim の環境を壊す恐れがあるため、当面は version=false のままにすることを推奨します。
+    version = false, -- 常に最新の git コミットを使用
+    -- version = "*", -- semver に対応するプラグインでは、最新の安定版のインストールを試みます
   },
   install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
-    enabled = true, -- check for plugin updates periodically
-    notify = false, -- notify on update
-  }, -- automatically check for plugin updates
+    enabled = true, -- プラグイン更新を定期的にチェック
+    notify = false, -- 更新を通知するか
+  }, -- プラグイン更新を自動で確認
   performance = {
     rtp = {
-      -- disable some rtp plugins
+      -- いくつかの rtp プラグインを無効化
       disabled_plugins = {
         "gzip",
         -- "matchit",

@@ -1,3 +1,3 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
+-- オプションは lazy.nvim 起動前に自動で読み込まれます
+-- 常に設定されるデフォルトのオプション: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
+-- 追加のオプションはここに記述してください

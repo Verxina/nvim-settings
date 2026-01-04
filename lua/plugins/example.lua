@@ -1,18 +1,18 @@
--- since this is just an example spec, don't actually load anything here and return an empty spec
+-- これはサンプルの spec なので、実際には何も読み込まず空の spec を返します
 -- stylua: ignore
 if true then return {} end
 
--- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
+-- "plugins" ディレクトリ配下の各 spec ファイルは lazy.nvim によって自動で読み込まれます
 --
--- In your plugin files, you can:
--- * add extra plugins
--- * disable/enabled LazyVim plugins
--- * override the configuration of LazyVim plugins
+-- プラグインファイルでは次のことができます:
+-- * 追加のプラグインを入れる
+-- * LazyVim のプラグインを無効化/有効化する
+-- * LazyVim プラグインの設定を上書きする
 return {
-  -- add gruvbox
+  -- gruvbox を追加
   { "ellisonleao/gruvbox.nvim" },
 
-  -- Configure LazyVim to load gruvbox
+  -- LazyVim が gruvbox を読み込むよう設定
   {
     "LazyVim/LazyVim",
     opts = {
@@ -20,17 +20,17 @@ return {
     },
   },
 
-  -- change trouble config
+  -- trouble の設定を変更
   {
     "folke/trouble.nvim",
-    -- opts will be merged with the parent spec
+    -- opts は親の spec とマージされます
     opts = { use_diagnostic_signs = true },
   },
 
-  -- disable trouble
+  -- trouble を無効化
   { "folke/trouble.nvim", enabled = false },
 
-  -- override nvim-cmp and add cmp-emoji
+  -- nvim-cmp を上書きして cmp-emoji を追加
   {
     "hrsh7th/nvim-cmp",
     dependencies = { "hrsh7th/cmp-emoji" },
@@ -40,11 +40,11 @@ return {
     end,
   },
 
-  -- change some telescope options and a keymap to browse plugin files
+  -- telescope の一部オプションとプラグインファイルを探すキーマップを変更
   {
     "nvim-telescope/telescope.nvim",
     keys = {
-      -- add a keymap to browse plugin files
+      -- プラグインファイルを探すキーマップを追加
       -- stylua: ignore
       {
         "<leader>fp",
@@ -52,7 +52,7 @@ return {
         desc = "Find Plugin File",
       },
     },
-    -- change some options
+    -- いくつかのオプションを変更
     opts = {
       defaults = {
         layout_strategy = "horizontal",
@@ -63,20 +63,20 @@ return {
     },
   },
 
-  -- add pyright to lspconfig
+  -- lspconfig に pyright を追加
   {
     "neovim/nvim-lspconfig",
     ---@class PluginLspOpts
     opts = {
       ---@type lspconfig.options
       servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
+        -- pyright は mason で自動インストールされ、lspconfig で読み込まれます
         pyright = {},
       },
     },
   },
 
-  -- add tsserver and setup with typescript.nvim instead of lspconfig
+  -- tsserver を追加し、lspconfig の代わりに typescript.nvim で設定
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -93,29 +93,29 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
-        -- tsserver will be automatically installed with mason and loaded with lspconfig
+        -- tsserver は mason で自動インストールされ、lspconfig で読み込まれます
         tsserver = {},
       },
-      -- you can do any additional lsp server setup here
-      -- return true if you don't want this server to be setup with lspconfig
+      -- ここで追加の LSP サーバー設定を行えます
+      -- lspconfig でこのサーバーを設定したくない場合は true を返します
       ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
       setup = {
-        -- example to setup with typescript.nvim
+        -- typescript.nvim で設定する例
         tsserver = function(_, opts)
           require("typescript").setup({ server = opts })
           return true
         end,
-        -- Specify * to use this function as a fallback for any server
+        -- 任意のサーバーのフォールバックとして使うには * を指定します
         -- ["*"] = function(server, opts) end,
       },
     },
   },
 
-  -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
-  -- treesitter, mason and typescript.nvim. So instead of the above, you can use:
+  -- TypeScript 用には、lspconfig・treesitter・mason・typescript.nvim を正しくセットアップするための追加 spec も LazyVim に含まれています。
+  -- そのため、上記の代わりに次の設定を使えます:
   { import = "lazyvim.plugins.extras.lang.typescript" },
 
-  -- add more treesitter parsers
+  -- treesitter のパーサーをさらに追加
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
@@ -138,13 +138,13 @@ return {
     },
   },
 
-  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
-  -- would overwrite `ensure_installed` with the new value.
-  -- If you'd rather extend the default config, use the code below instead:
+  -- `vim.tbl_deep_extend` はリストではなくテーブルだけをマージできるため、上のコードは
+  -- `ensure_installed` を新しい値で上書きしてしまいます。
+  -- デフォルト設定を拡張したい場合は、代わりに下のコードを使ってください:
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      -- add tsx and treesitter
+      -- tsx と typescript を追加
       vim.list_extend(opts.ensure_installed, {
         "tsx",
         "typescript",
@@ -152,7 +152,7 @@ return {
     end,
   },
 
-  -- the opts function can also be used to change the default opts:
+  -- opts 関数でデフォルトのオプションも変更できます:
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
@@ -165,24 +165,24 @@ return {
     end,
   },
 
-  -- or you can return new options to override all the defaults
+  -- あるいは新しいオプションを返して全てのデフォルトを上書きできます
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
       return {
-        --[[add your custom lualine config here]]
+        --[[ここにカスタムの lualine 設定を追加してください]]
       }
     end,
   },
 
-  -- use mini.starter instead of alpha
+  -- alpha の代わりに mini.starter を使用
   { import = "lazyvim.plugins.extras.ui.mini-starter" },
 
-  -- add jsonls and schemastore packages, and setup treesitter for json, json5 and jsonc
+  -- jsonls と schemastore のパッケージを追加し、json・json5・jsonc 用の treesitter を設定
   { import = "lazyvim.plugins.extras.lang.json" },
 
-  -- add any tools you want to have installed below
+  -- インストールしておきたいツールをここに追加
   {
     "williamboman/mason.nvim",
     opts = {
