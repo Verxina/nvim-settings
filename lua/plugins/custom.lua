@@ -4,7 +4,7 @@ return {
     "romgrk/barbar.nvim",
     event = "VimEnter",
     config = function()
-      -- Move to previous/next
+      -- 前/次のバッファへ移動
       vim.keymap.set("n", "<S-h>", "<Cmd>BufferPrevious<CR>", { desc = "Prev buffer" })
       vim.keymap.set("n", "<S-l>", "<Cmd>BufferNext<CR>", { desc = "Next buffer" })
     end,
@@ -12,14 +12,14 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     config = function()
-      -- get nvim-tree api
+      -- nvim-tree の API を取得
       local api = require("nvim-tree.api")
 
-      -- custom on_attach function to create buffer-local keymaps
+      -- バッファローカルなキーマップを作る on_attach のカスタム関数
       local on_attach = function(bufnr)
-        -- default mappings
+        -- デフォルトのマッピング
         api.config.mappings.default_on_attach(bufnr)
-        -- custom buffer-local mapping
+        -- カスタムのバッファローカルマッピング
         vim.keymap.set(
           "n",
           "<C-e>",
@@ -28,12 +28,12 @@ return {
         )
       end
 
-      -- setup nvim-tree
+      -- nvim-tree を設定
       require("nvim-tree").setup({
         on_attach = on_attach,
       })
 
-      -- global mapping for all other buffers
+      -- 他のすべてのバッファ用のグローバルマッピング
       vim.keymap.set("n", "<C-e>", "<cmd>NvimTreeToggle<cr>", {
         noremap = true,
         silent = true,
@@ -46,16 +46,16 @@ return {
     config = function()
       require("toggleterm").setup()
 
-      -- Set keymap to toggle terminal in normal mode
+      -- ノーマルモードでターミナルをトグルするキーマップを設定
       vim.keymap.set("n", "<C-t>", "<cmd>ToggleTerm<cr>", {
         noremap = true,
         silent = true,
         desc = "Toggle terminal",
       })
 
-      -- Helper function for terminal keymaps
+      -- ターミナル用キーマップのヘルパー関数
       local function set_terminal_keymaps()
-        -- buffer-local keymaps for the terminal
+        -- ターミナル用のバッファローカルなキーマップ
         local opts = { buffer = 0 }
         vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
         vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
@@ -64,7 +64,7 @@ return {
         vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
       end
 
-      -- Apply keymaps when a terminal is opened
+      -- ターミナルが開かれたときにキーマップを適用
       vim.api.nvim_create_autocmd("TermOpen", {
         pattern = "term://*",
         callback = function()
@@ -74,13 +74,13 @@ return {
     end,
   },
 
-  -- Disable the default bufferline plugin to avoid conflicts
+  -- 競合を避けるためデフォルトの bufferline プラグインを無効化
   {
     "akinsho/bufferline.nvim",
     enabled = false,
   },
 
-  -- Add Copilot
+  -- Copilot を追加
   {
     "github/copilot.vim",
     cmd = "Copilot",

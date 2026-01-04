@@ -1,2 +1,2 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
+-- lazy.nvim と LazyVim、それにあなたのプラグインをブートストラップします
 require("config.lazy")
